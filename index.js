@@ -12,9 +12,14 @@ async function getWeatherData() {
     const response = await axios.get(
         "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/sirajganj?unitGroup=metric&key=3JCPTNAWW9PZUBER3D7GJ5HHQ&contentType=json"
     );
-    let weatherData = {};
-    response.data.days.forEach((i) => {
-        weatherData[i.datetime] = [i.temp, i.preciptype[0]];
+    let weatherData = { data: [] };
+    response.data.days.forEach((data, idx) => {
+        weatherData["data"].push([
+            data.datetime,
+            data.temp,
+            data.preciptype[0],
+            data.humidity,
+        ]);
     });
     return weatherData;
 }
